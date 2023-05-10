@@ -273,7 +273,7 @@ func ZipSpecifyMultiFile(sourceDir, zipFileName string, fileList []string) error
 
 	err := os.Chdir(sourceDir)
 	if err != nil {
-		logger.Error(err)
+		return err
 	}
 
 	fzip, _ := os.Create(zipFileName)
@@ -283,7 +283,6 @@ func ZipSpecifyMultiFile(sourceDir, zipFileName string, fileList []string) error
 	//defer w.Close()
 
 	for i := 0; i < len(fileList); i++ {
-		fmt.Println(fileList[i])
 		filepath.Walk(fileList[i], func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
@@ -322,7 +321,7 @@ func ZipSpecifyMultiFile(sourceDir, zipFileName string, fileList []string) error
 		//删除原文件
 		err = os.RemoveAll(fileList[i])
 		if err != nil {
-			logger.Error("删除文件 ", fileList[i], " 失败.", err)
+			return err
 		}
 	}
 
